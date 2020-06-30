@@ -17,6 +17,7 @@ This container has all the necessary tools to create machine learning systems wi
 - matplotlib
 - stable-baselines
 - pandas
+- labelImg
 
 ## Instructions 
 You have two choices, one is pulling the image from the docker hub, and the other option is to build the image with the Dockerfile. 
