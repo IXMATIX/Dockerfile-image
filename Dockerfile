@@ -6,6 +6,7 @@ RUN apt-get -y install cmake protobuf-compiler
 RUN apt-get install -y libsm6 libxrender1 libfontconfig1
 RUN apt-get install -y  libpq-dev
 RUN apt-get install -y libopenmpi-dev
+RUN apt-get install -y python3-pil python3-lxml python3-tk
 RUN apt install -y curl 
 RUN apt install -y sl 
 RUN apt install -y zip unzip
@@ -23,7 +24,7 @@ RUN pip3 install mujoco-py
 RUN pip3 install mpi4py
 RUN pip3 install pandas
 RUN pip3 install setuptools
-RUN pip3 install tensorflow
+RUN pip3 install tensorflow==1.14.0
 RUN pip3 install syspath
 RUN pip3 install lockfile
 RUN pip3 install tokenizer
@@ -34,6 +35,12 @@ RUN pip3 install baselines
 RUN pip3 install Keras
 RUN pip3 install torch torchvision --no-cache-dir
 RUN pip3 install boto3
+RUN pip3 install imutils
+RUN pip3 install Cython
+RUN pip3 install contextlib2
+RUN pip3 install tf_slim
+RUN pip3 install pillow
+RUN pip3 install lxml
 RUN mkdir -p /root/workspace
 RUN mkdir -p ~/.aws 
 
@@ -52,3 +59,17 @@ RUN pip3 install -r requirements/requirements-linux-python3.txt
 RUN make qt5py3
 
 WORKDIR /root
+RUN git clone https://github.com/tensorflow/models.git
+RUN git clone https://github.com/cocodataset/cocoapi.git
+
+WORKDIR /root/cocoapi/PythonAPI
+RUN make 
+RUN cp -r pycocotools /root/models/research/
+RUN pip3 install pycocotools
+
+WORKDIR /root/models/research/
+protoc object_detection/protos/*.proto --python_out=.
+
+WORKDIR /root
+RUN echo "export PYTHONPATH=$PYTHONPATH:/root/models/research:/root/models/research/slim" >> .bashrc
+RUN source ~/.bashrc
