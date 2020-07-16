@@ -1,4 +1,6 @@
 FROM ubuntu:18.04
+ENV TZ=America/Mexico_City
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && apt-get -y update
 RUN apt-get install -y build-essential python3.6 python3-pip python3-dev
 RUN apt install -y libsm6 libxext6
@@ -14,13 +16,9 @@ RUN apt install -y nano
 RUN apt install -y git
 RUN pip3 install --upgrade pip
 RUN pip3 install opencv-python
-RUN pip3 install dlib
-RUN pip3 install face-recognition
-RUN pip3 install jupyter
 RUN pip3 install botocore
 RUN pip3 install scikit-learn
 RUN pip3 install matplotlib
-RUN pip3 install mujoco-py
 RUN pip3 install mpi4py
 RUN pip3 install pandas
 RUN pip3 install setuptools
@@ -29,11 +27,7 @@ RUN pip3 install syspath
 RUN pip3 install lockfile
 RUN pip3 install tokenizer
 RUN pip3 install tokenizers
-RUN pip3 install stable-baselines
-RUN pip3 install gym==0.7.4
-RUN pip3 install baselines
 RUN pip3 install Keras
-RUN pip3 install torch torchvision --no-cache-dir
 RUN pip3 install boto3
 RUN pip3 install imutils
 RUN pip3 install Cython
@@ -41,6 +35,7 @@ RUN pip3 install contextlib2
 RUN pip3 install tf_slim
 RUN pip3 install pillow
 RUN pip3 install lxml
+RUN pip3 install pycocotools
 RUN mkdir -p /root/workspace
 RUN mkdir -p ~/.aws 
 
@@ -60,16 +55,11 @@ RUN make qt5py3
 
 WORKDIR /root
 RUN git clone https://github.com/tensorflow/models.git
-RUN git clone https://github.com/cocodataset/cocoapi.git
+RUN cd models/research \
+    && protoc object_detection/protos/*.proto --python_out=. \
+    && cp object_detection/packages/tf1/setup.py . \
+    && python3 -m pip install . \
+    && python3 object_detection/builders/model_builder_tf1_test.py
 
-WORKDIR /root/cocoapi/PythonAPI
-RUN make 
-RUN cp -r pycocotools /root/models/research/
-RUN pip3 install pycocotools
+ENV PYTHONPATH=$PYTHONPATH:/tensorflow/models:/tensorflow/models/slim
 
-WORKDIR /root/models/research/
-protoc object_detection/protos/*.proto --python_out=.
-
-WORKDIR /root
-RUN echo "export PYTHONPATH=$PYTHONPATH:/root/models/research:/root/models/research/slim" >> .bashrc
-RUN source ~/.bashrc
