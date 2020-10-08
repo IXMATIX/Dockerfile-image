@@ -22,7 +22,7 @@ RUN pip3 install matplotlib
 RUN pip3 install mpi4py
 RUN pip3 install pandas
 RUN pip3 install setuptools
-RUN pip3 install tensorflow==1.14.0
+RUN pip3 install tensorflow==1.15
 RUN pip3 install syspath
 RUN pip3 install lockfile
 RUN pip3 install tokenizer
@@ -36,6 +36,9 @@ RUN pip3 install tf_slim
 RUN pip3 install pillow
 RUN pip3 install lxml
 RUN pip3 install pycocotools
+RUN pip3 install glob3
+RUN pip3 install --upgrade opencv-python
+RUN pip3 install --upgrade google-cloud-vision
 RUN mkdir -p /root/workspace
 RUN mkdir -p ~/.aws 
 
