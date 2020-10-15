@@ -42,8 +42,9 @@ RUN pip3 install pycocotools
 RUN pip3 install glob3
 RUN pip3 install --upgrade opencv-python
 RUN pip3 install --upgrade google-cloud-vision
-RUN pip3 pip install os-sys
 RUN pip3 install simpy.io
+RUN pip3 install regex
+RUN echo "export PYTHONIOENCODING=utf-8" >> .bashrc
 RUN mkdir -p /root/workspace
 RUN mkdir -p ~/.aws 
 
@@ -55,19 +56,23 @@ RUN ./aws/install
 COPY credentials .aws
 COPY config .aws
 
-RUN git clone https://github.com/tzutalin/labelImg.git
-WORKDIR /root/labelImg
-RUN apt-get install -y pyqt5-dev-tools
-RUN pip3 install -r requirements/requirements-linux-python3.txt
-RUN make qt5py3
-
-WORKDIR /root
 RUN git clone https://github.com/tensorflow/models.git
 RUN cd models/research \
     && protoc object_detection/protos/*.proto --python_out=. \
     && cp object_detection/packages/tf1/setup.py . \
     && python3 -m pip install . \
     && python3 object_detection/builders/model_builder_tf1_test.py
+
+WORKDIR /root
+
+RUN git clone https://github.com/tzutalin/labelImg.git
+WORKDIR /root/labelImg
+RUN apt-get update 
+RUN apt-get install -y pyqt5-dev-tools
+RUN pip3 install -r requirements/requirements-linux-python3.txt
+RUN make qt5py3
+
+
 
 ENV PYTHONPATH=$PYTHONPATH:/tensorflow/models:/tensorflow/models/slim
 
