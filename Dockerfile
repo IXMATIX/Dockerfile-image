@@ -14,10 +14,13 @@ RUN apt install -y sl
 RUN apt install -y zip unzip
 RUN apt install -y nano
 RUN apt install -y git
+RUN apt-get install -y python3-tk
 RUN pip3 install --upgrade pip
 RUN pip3 install opencv-python
 RUN pip3 install botocore
+RUN pip3 install sklearn
 RUN pip3 install scikit-learn
+RUN pip3 install scikit-image
 RUN pip3 install matplotlib
 RUN pip3 install mpi4py
 RUN pip3 install pandas
@@ -39,6 +42,8 @@ RUN pip3 install pycocotools
 RUN pip3 install glob3
 RUN pip3 install --upgrade opencv-python
 RUN pip3 install --upgrade google-cloud-vision
+RUN pip3 pip install os-sys
+RUN pip3 install simpy.io
 RUN mkdir -p /root/workspace
 RUN mkdir -p ~/.aws 
 
