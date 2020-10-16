@@ -1,23 +1,7 @@
 # Dockerfile
-Dockerfile to create a complet machine learning enironment. 
+IX2CODE Dockerfile 
 ## Machine Learning container:
-This container has all the necessary tools to create machine learning systems with python and AWS. It includes the following frameworks and packages:
-- python 3.6
-- opencv
-- dlib
-- face-recognition
-- jupyter
-- boto3
-- scikit-learn
-- tensorflow
-- pytorch 
-- gym
-- baselines
-- Keras
-- matplotlib
-- stable-baselines
-- pandas
-- labelImg
+This image contains all the necessary tools to allow you to run ix2code app.
 
 ## Instructions 
 You have two choices, one is pulling the image from the docker hub, and the other option is to build the image with the Dockerfile. 
@@ -27,34 +11,34 @@ You have two choices, one is pulling the image from the docker hub, and the othe
 
 To install the image, it is necessary to download the next repository:
 ```sh
-$ docker pull gfdfranco/ml_env
+$ docker pull ixmatix/ix2code-env
 ```
 The next command allows you run the container:
 ```sh
-$ docker run -it --name CONATINER_NAME -v FOLDER_DIRECTORY:/root/workspace -e DISPLAY=XLAUNCH_IP:0.0 gfdfranco/ml_env
+$ docker run -it --name CONATINER_NAME -v FOLDER_DIRECTORY:/root/workspace -e DISPLAY=XLAUNCH_IP:0.0 ixmatix/ix2code-env
 ```
 Example:
 ```sh
-$ docker run -it --name ml -v /c/Users/gfdge/Documents/ml_folder:/root/workspace -e DISPLAY=192.168.56.1:0.0 gfdfranco/ml_env
+$ docker run -it --name ix2code-env -v /c/Users/gfdge/Documents/ml_folder:/root/workspace -e DISPLAY=192.168.56.1:0.0 ixmatix/ix2code-env
 ```
 To open the container again you could use:
 ```sh
-$ docker start -ai ml
+$ docker start -ai ix2code-env
 ```
 
 
 ### Option 2: (Dockerfile ) Build the image.
 Once that you downloaded the repository and you are into dockerfile directory is necessary to execute the next command:
 ```sh
-$ docker build -t ml_env .
+$ docker build -t ix2code-env .
 ```
 To run the container will assign a volume to share files between the container and PC, it will have an interactive session and will have the capacity  DISPLAY command if you want to view screens.
 ```sh
-$ docker run -it --name CONATINER_NAME -v FOLDER_DIRECTORY:/root/workspace -e DISPLAY=XLAUNCH_IP:0.0 ml_env
+$ docker run -it --name CONATINER_NAME -v FOLDER_DIRECTORY:/root/workspace -e DISPLAY=XLAUNCH_IP:0.0 ix2code-env
 ```
 Example:
 ```sh
-$ docker run -it --name ml -v /c/Users/gfdge/Documents/ml_folder:/root/workspace -e DISPLAY=192.168.56.1:0.0 ml_env
+$ docker run -it --name ml -v /c/Users/gfdge/Documents/ml_folder:/root/workspace -e DISPLAY=192.168.56.1:0.0 ix2code-env
 ```
 To open the container again you could use:
 ```sh
