@@ -5,16 +5,16 @@ RUN apt-get update && apt-get -y update
 RUN apt-get install -y build-essential python3.6 python3-pip python3-dev
 RUN apt install -y libsm6 libxext6
 RUN apt-get -y install cmake protobuf-compiler
-RUN apt-get install -y libsm6 libxrender1 libfontconfig1
+RUN apt-get install -y libxrender1 libfontconfig1
 RUN apt-get install -y  libpq-dev
 RUN apt-get install -y libopenmpi-dev
 RUN apt-get install -y python3-pil python3-lxml python3-tk
+RUN apt install -y libgl1-mesa-glx
 RUN apt install -y curl 
 RUN apt install -y sl 
 RUN apt install -y zip unzip
 RUN apt install -y nano
 RUN apt install -y git
-RUN apt-get install -y python3-tk
 RUN pip3 install --upgrade pip
 RUN pip3 install opencv-python
 RUN pip3 install botocore
@@ -37,14 +37,11 @@ RUN pip3 install Cython
 RUN pip3 install contextlib2
 RUN pip3 install tf_slim
 RUN pip3 install pillow
-RUN pip3 install lxml
-RUN pip3 install pycocotools
 RUN pip3 install glob3
 RUN pip3 install --upgrade opencv-python
-RUN pip3 install --upgrade google-cloud-vision
+RUN pip3 install --upgrade google-cloud-vision==0.25
 RUN pip3 install simpy.io
 RUN pip3 install regex
-RUN echo "export PYTHONIOENCODING=utf-8" >> .bashrc
 RUN mkdir -p /root/workspace
 RUN mkdir -p ~/.aws 
 
@@ -57,6 +54,8 @@ COPY credentials .aws
 COPY config .aws
 
 RUN git clone https://github.com/tensorflow/models.git
+RUN git clone https://github.com/tzutalin/labelImg.git
+
 RUN cd models/research \
     && protoc object_detection/protos/*.proto --python_out=. \
     && cp object_detection/packages/tf1/setup.py . \
@@ -64,14 +63,7 @@ RUN cd models/research \
     && python3 object_detection/builders/model_builder_tf1_test.py
 
 WORKDIR /root
-
-RUN git clone https://github.com/tzutalin/labelImg.git
-WORKDIR /root/labelImg
-RUN apt-get update 
-RUN apt-get install -y pyqt5-dev-tools
-RUN pip3 install -r requirements/requirements-linux-python3.txt
-RUN make qt5py3
-
+RUN echo "export PYTHONIOENCODING=utf-8" >> .bashrc
 
 
 ENV PYTHONPATH=$PYTHONPATH:/tensorflow/models:/tensorflow/models/slim
