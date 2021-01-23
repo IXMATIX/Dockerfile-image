@@ -43,6 +43,8 @@ RUN pip3 install --upgrade google-cloud-vision==0.25
 RUN pip3 install simpy.io
 RUN pip3 install regex
 RUN pip3 install Shapely
+RUN pip3 install psycopg2
+RUN pip3 install python-magic
 RUN mkdir -p /root/workspace
 RUN mkdir -p ~/.aws 
 
