@@ -9,6 +9,7 @@ RUN apt-get install -y libxrender1 libfontconfig1
 RUN apt-get install -y  libpq-dev
 RUN apt-get install -y libopenmpi-dev
 RUN apt-get install -y python3-pil python3-lxml python3-tk
+RUN apt-get install -y imagemagick
 RUN apt install -y libgl1-mesa-glx
 RUN apt install -y curl 
 RUN apt install -y sl 
