@@ -18,6 +18,7 @@ RUN apt install -y sl
 RUN apt install -y zip unzip
 RUN apt install -y nano
 RUN apt install -y wget
+RUN apt-get -y update
 RUN apt install -y git
 RUN pip3 install --upgrade pip
 RUN pip3 install opencv-python
@@ -92,6 +93,3 @@ RUN locale-gen
 RUN update-locale LANG=$LANG
 
 ENV PYTHONPATH=$PYTHONPATH:/tensorflow/models:/tensorflow/models/slim
-
-
-
