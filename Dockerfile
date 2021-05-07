@@ -49,6 +49,8 @@ RUN pip3 install regex
 RUN pip3 install Shapely
 RUN pip3 install psycopg2
 RUN pip3 install python-magic
+RUN apt install -y xvfb
+RUN apt-get install -y wkhtmltopdf
 RUN mkdir -p /root/workspace
 RUN mkdir -p ~/.aws 
 
@@ -93,6 +95,3 @@ RUN locale-gen
 RUN update-locale LANG=$LANG
 
 ENV PYTHONPATH=$PYTHONPATH:/tensorflow/models:/tensorflow/models/slim
-
-
-
